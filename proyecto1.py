@@ -1,7 +1,13 @@
+#Miguel Parada - Unimonserrate
+
+# utilizar modulo threading ytime para crear hilos pausarlos y reanudarlos en un tiempo definido.
 import time
 import threading
 
+
 class Contador:
+
+  # Metodo _init_ con los argumentos id y posicion.
     def __init__(self, id, posicion):
         self.id = id
         self.count = 0
@@ -51,9 +57,11 @@ class Contador:
 contador1 = Contador(1, 1)
 contador2 = Contador(2, 20)
 
+
 # Inicia los contadores en hilos separados
 contador1.start()
 contador2.start()
+
 
 # Espera a que el usuario ingrese los números 1 y 2
 while True:
@@ -66,7 +74,15 @@ while True:
         contador1.resume()
     elif key == '22':
         contador2.resume()
-
+    elif key in '3':
+        contador1.pause()
+        contador2.pause()
+        contador1.thread.join()
+        
+        contador2.thread.join()
+        print("programa finalizado")      
+        break
+        
           
 
 

@@ -1,13 +1,21 @@
 # proyecto1
 
-el método wait_key permite pausar y reanudar cada contador por separado. El usuario puede ingresar el número "1" para pausar contador 1 y el número "2" para pausar el contador 2. El usuario también puede ingresar los números "11" y "22" para reanudar cada contador por separado.
+utilizar modulo threading ytime para crear hilos pausarlos y reanudarlos y un tiempo definido
 
-El método pause simplemente establece la variable paused en True, mientras que el método resume establece la variable paused en False y notifica al hilo en espera para que reanude la ejecución.
+se crea la clase contador con:
 
-se crean dos instancias de la clase Contador y se llama al método start en cada una de ellas. El programa esperará a que el usuario ingrese los números "1" y "2" para pausar y los numeros "11" y "22" para reanudar cada contador por separado.
+El argumento id es un número entero que representa el numero del contador. posicion es la posición en la que se imprimirá el contador en la consola. Las variables count (el número en el contador), paused (un indicador de si el contador está pausado), pause_cond (un objeto de condición utilizado para pausar y reanudar el contador) y posicion
 
-La clase contador cuenta con dos argumentos id y posicion (para especificar la posicion en la pantalla donde se imprimira el contador)
+El método start se llama para iniciar el hilo del contador. Crea un nuevo objeto usando threading.Thread y le asigna la función run. El hilo se inicia llamando al método start del hilo.
 
-El método run imprime el contador en la posición correspondiente utilizando los caracteres de control de terminal \033[{position}G que establece la posición del cursor en la columna posicion. El primer contador se muestra en la columna 1 y el segundo contador se muestra en la columna 20.
+El método run es el que se ejecuta en el hilo. Es un bucle infinito que se ejecuta hasta que se detiene el hilo. Utiliza with para adquirir el bloqueo del objeto pause_cond y pausar el hilo mientras la variable paused es True. Una vez que se reanuda el hilo, aumenta el valor del contador mas uno, lo imprime en la consola en la posición dada y espera dos segundos antes de continuar con la siguiente iteración.
 
-Este código es útil para aplicaciones que necesitan realizar varias tareas simultáneamente y que deben pausarse y reanudarse por separado en respuesta a eventos específicos.
+Los métodos pause y resume se utilizan para pausar y reanudar el contador. El método pause establece la variable paused en True, lo que hará que el contador se detenga en la próxima repeticion del bucle. El método resume establece la variable paused en False, lo que hace que el contador continúe. Además, notifica al objeto pause_cond que se ha reanudado el hilo.
+
+el método wait_key permite pausar y reanudar cada contador por separado. El usuario puede ingresar el número "1" para pausar contador 1 y el número "2" para pausar el contador 2.
+
+Afuera de la clase contador,
+
+se crean dos contadores de la clase Contador y se llama al método start en cada una de ellas. El programa esperará a que el usuario ingrese los números "1" y "2" para pausar y los numeros "11" y "22" para reanudar cada contador por separado.
+
+Si el usuario presiona la tecla 3, se pausan ambos contadores y se espera a que los hilos terminen su ejecución llamando al método join() en ambos hilos, se muestra un mensaje de "programa finalizado" y se sale del programa con break.
